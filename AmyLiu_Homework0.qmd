@@ -1,0 +1,63 @@
+---
+title: "Homework0"
+author: "Amy Liu"
+format: html
+editor: visual
+---
+
+```{r} 
+#| echo: false
+library(ggplot2)
+
+##############################USER INPUT########################################
+
+#grader can change a, b, and/or c here
+a <- 1
+b <- 3
+c <- 2
+
+################################################################################
+
+quadratic_solve <- function(a, b, c) {
+  d_value <- b^2 - 4 * a * c
+  if (d_value > 0) {
+    x1 <- (-b + sqrt(d_value)) / (2 * a)
+    x2 <- (-b - sqrt(d_value)) / (2 * a)
+    solutions <- c(x1, x2)
+  } else if (d_value == 0) {
+    x1 <- -b / (2 * a)
+    solutions <- x1
+  } else {
+    solutions <- NULL
+  }
+  return(solutions)
+}
+
+x_range <- seq(-10, 10, by = 0.1)
+y_values <- a * x_range^2 + b * x_range + c
+
+quadratic_plot <- ggplot() +
+  geom_line(aes(x = x_range, y = y_values), color = "green") +
+  geom_hline(yintercept = 0, color = "blue") +
+  geom_vline(xintercept = solutions, color = "red", linetype = "dashed") +
+  geom_point(aes(x = solutions, y = 0), color = "red") +
+  labs(x = "x", y = "y") +
+  ggtitle("Quadratic Function: y = ax^2 + bx + c") +
+  theme_minimal()
+
+#print the solutions, so there could be 0, 1, or 2 solutions 
+solutions <- quadratic_solve(a, b, c)
+
+if (is.null(solutions)) {
+  cat("Zero solutions\n")
+} else if (length(solutions) == 1) {
+  cat("One solution:", solutions, "\n")
+} else {
+  cat("Two solutions:", solutions, "\n")
+}
+
+#print the plot, showing where the function intersections with y = 0 with red dotted lines and points to represent the solutions, depending on what a, b, and c are. 
+print(quadratic_plot)
+```
+
+Currently, this plot shows the quadratic function $$ f(x) = \alpha x^2 + \beta x + c $$ for a = 1, b = 3, c = 2. The green line is the quadratic function, the blue line is the x-axis, and the red dotted line(s) and point(s) that intersect with the black and blue is/are the solutions. Depending on if you change a, b, and/or c, there might be 0, 1, or 2 red dotted line(s) and point(s). 
